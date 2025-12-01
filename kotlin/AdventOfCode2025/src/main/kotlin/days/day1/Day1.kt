@@ -3,6 +3,7 @@ package days.day1
 import setup.Day
 import util.firstInt
 import java.lang.Math.floorDiv
+import kotlin.math.abs
 
 class Day1(override val input: String) : Day<Int>(input) {
 
@@ -21,7 +22,7 @@ class Day1(override val input: String) : Day<Int>(input) {
         }.first
 
     private fun rotate(dial: Int, distance: Int): Int = when {
-        dial < distance -> kotlin.math.abs(floorDiv(distance, 100) - floorDiv(dial, 100))
+        dial < distance -> abs(floorDiv(distance, 100) - floorDiv(dial, 100))
         dial > distance -> rotate(-dial, -distance)
         else -> 0
     }
