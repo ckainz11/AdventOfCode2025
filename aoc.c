@@ -62,6 +62,8 @@ int main(int argc, char *argv[]) {
 	if (day <= 0 || day > 12)
 		usage(EXIT_FAILURE);
 
+	run();
+
 	return 0;
 }
 
@@ -88,21 +90,26 @@ void run(void) {
 	}
 
 
+	fclose(input);
+	FILE *input_part2 = open_input_file();
+
 	printf("Solution Part 2:\n");
 	switch(day) {
-		case 1: solveDay1PartTwo(input); break;
-		case 2: solveDay2PartTwo(input); break;
-		case 3: solveDay3PartTwo(input); break;
-		case 4: solveDay4PartTwo(input); break;
-		case 5: solveDay5PartTwo(input); break;
-		case 6: solveDay6PartTwo(input); break;
-		case 7: solveDay7PartTwo(input); break;
-		case 8: solveDay8PartTwo(input); break;
-		case 9: solveDay9PartTwo(input); break;
-		case 10: solveDay10PartTwo(input); break;
-		case 11: solveDay11PartTwo(input); break;
-		case 12: solveDay12PartTwo(input); break;
+		case 1: solveDay1PartTwo(input_part2); break;
+		case 2: solveDay2PartTwo(input_part2); break;
+		case 3: solveDay3PartTwo(input_part2); break;
+		case 4: solveDay4PartTwo(input_part2); break;
+		case 5: solveDay5PartTwo(input_part2); break;
+		case 6: solveDay6PartTwo(input_part2); break;
+		case 7: solveDay7PartTwo(input_part2); break;
+		case 8: solveDay8PartTwo(input_part2); break;
+		case 9: solveDay9PartTwo(input_part2); break;
+		case 10: solveDay10PartTwo(input_part2); break;
+		case 11: solveDay11PartTwo(input_part2); break;
+		case 12: solveDay12PartTwo(input_part2); break;
 	}
+	
+	fclose(input);
 }
 
 FILE *open_input_file(void) {
