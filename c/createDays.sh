@@ -31,7 +31,7 @@ void solve_day${i}_part1(FILE *input) {
     // TODO: implement solution for Day $i Part 1
 }
 
-void solve_day${i}_part(FILE *input) {
+void solve_day${i}_part2(FILE *input) {
     // TODO: implement solution for Day $i Part 2
 }
 EOF

@@ -4,6 +4,6 @@ void solve_day12_part1(FILE *input) {
     // TODO: implement solution for Day 12 Part 1
 }
 
-void solve_day12_part(FILE *input) {
+void solve_day12_part2(FILE *input) {
     // TODO: implement solution for Day 12 Part 2
 }
