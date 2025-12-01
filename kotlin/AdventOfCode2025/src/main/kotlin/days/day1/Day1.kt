@@ -6,18 +6,16 @@ import java.lang.Math.floorDiv
 
 class Day1(override val input: String) : Day<Int>(input) {
 
-
     private val INITIAL_DIAL = 50
     private val INITIAL_PASSWORD = 0
 
-    override fun solve1(): Int = solve { password, dial, _ -> password + if (dial == 0) 1 else 0 }
+    override fun solve1(): Int = solve { dial, _ -> if (dial == 0) 1 else 0 }
+    override fun solve2(): Int = solve { dial, distance -> rotate(dial, dial + distance) }
 
-    override fun solve2(): Int = solve { password, dial, distance -> password + rotate(dial, dial + distance) }
-
-    private fun solve(passwordUpdate: (Int, Int, Int) -> Int): Int = parseInput()
+    private fun solve(passwordUpdate: (Int, Int) -> Int): Int = parseInput()
         .fold(Pair(INITIAL_PASSWORD, INITIAL_DIAL)) { (password, dial), distance ->
             val newDial = (dial + distance) % 100
-            val newPassword = passwordUpdate(password, dial, distance)
+            val newPassword = password + passwordUpdate(dial, distance)
 
             newPassword to newDial
         }.first
