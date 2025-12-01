@@ -10,18 +10,14 @@ class Day1(override val input: String) : Day<Int>(input) {
     private val INITIAL_DIAL = 50
     private val INITIAL_PASSWORD = 0
 
-    override fun solve1(): Int = parseInput()
+    override fun solve1(): Int = solve { password, dial, _ -> password + if (dial == 0) 1 else 0 }
+
+    override fun solve2(): Int = solve { password, dial, distance -> password + rotate(dial, dial + distance) }
+
+    private fun solve(passwordUpdate: (Int, Int, Int) -> Int): Int = parseInput()
         .fold(Pair(INITIAL_PASSWORD, INITIAL_DIAL)) { (password, dial), distance ->
             val newDial = (dial + distance) % 100
-            val newPassword = password + if (dial == 0) 1 else 0
-
-            newPassword to newDial
-        }.first
-
-    override fun solve2(): Int = parseInput()
-        .fold(Pair(INITIAL_PASSWORD, INITIAL_DIAL)) { (password, dial), distance ->
-            val newDial = (dial + distance) % 100
-            val newPassword = password + rotate(dial, dial + distance)
+            val newPassword = passwordUpdate(password, dial, distance)
 
             newPassword to newDial
         }.first
