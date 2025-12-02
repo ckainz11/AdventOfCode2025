@@ -77,7 +77,7 @@ void run(void) {
 		exit(EXIT_FAILURE);
 	
 	printf("Solution Part 1:\n");
-	clock_t start1 = clock();
+	clock_t tic1 = clock();
 	switch(day) {
 		case 1: solve_day1_part1(input); break;
 		case 2: solve_day2_part1(input); break;
@@ -93,14 +93,14 @@ void run(void) {
 		case 12: solve_day12_part1(input); break;
 	}
 
-	clock_t end1 = clock();
-	print_run_time(start1, end1);
+	clock_t toc1 = clock();
+	print_run_time(tic1, toc1);
 
 	fclose(input);
 	FILE *input_part2 = open_input_file();
 
 	printf("\nSolution Part 2:\n");
-	clock_t start2 = clock();
+	clock_t tic2 = clock();
 	switch(day) {
 		case 1: solve_day1_part2(input_part2); break;
 		case 2: solve_day2_part2(input_part2); break;
@@ -116,8 +116,8 @@ void run(void) {
 		case 12: solve_day12_part2(input_part2); break;
 	}
 
-	clock_t end2 = clock();
-	print_run_time(start2, end2);
+	clock_t toc2 = clock();
+	print_run_time(tic2, toc2);
 	
 	fclose(input);
 }
@@ -140,8 +140,8 @@ FILE *open_input_file(void) {
     return fp;
 }
 
-void print_run_time(clock_t start, clock_t end) {
-	double time = (double) (end - start) / CLOCKS_PER_SEC;
+void print_run_time(clock_t tic, clock_t toc) {
+	double time = (double) (toc - tic) / CLOCKS_PER_SEC;
 	if (time >= 1)
 		printf("in %f s\n", time);
 	else
