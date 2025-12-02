@@ -46,3 +46,4 @@ bin/
 
 ### AOC ###
 Config.kt
+src/main/resources/**

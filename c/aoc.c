@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include <unistd.h>
 
 #include "day1/day1.h"
@@ -18,6 +19,8 @@
 
 void run(void);
 FILE *open_input_file(void);
+void print_run_time(clock_t start, clock_t end);
+
 void usage(int retcode) {
 	printf("Usage: aoc -d day [-x]\n");
 	exit(retcode);
@@ -74,6 +77,7 @@ void run(void) {
 		exit(EXIT_FAILURE);
 	
 	printf("Solution Part 1:\n");
+	clock_t start1 = clock();
 	switch(day) {
 		case 1: solve_day1_part1(input); break;
 		case 2: solve_day2_part1(input); break;
@@ -89,11 +93,14 @@ void run(void) {
 		case 12: solve_day12_part1(input); break;
 	}
 
+	clock_t end1 = clock();
+	print_run_time(start1, end1);
 
 	fclose(input);
 	FILE *input_part2 = open_input_file();
 
-	printf("Solution Part 2:\n");
+	printf("\nSolution Part 2:\n");
+	clock_t start2 = clock();
 	switch(day) {
 		case 1: solve_day1_part2(input_part2); break;
 		case 2: solve_day2_part2(input_part2); break;
@@ -108,6 +115,9 @@ void run(void) {
 		case 11: solve_day11_part2(input_part2); break;
 		case 12: solve_day12_part2(input_part2); break;
 	}
+
+	clock_t end2 = clock();
+	print_run_time(start2, end2);
 	
 	fclose(input);
 }
@@ -128,5 +138,13 @@ FILE *open_input_file(void) {
     }
 
     return fp;
+}
+
+void print_run_time(clock_t start, clock_t end) {
+	double time = (double) (end - start) / CLOCKS_PER_SEC;
+	if (time >= 1)
+		printf("in %f s\n", time);
+	else
+		printf("in %f ms\n", time * 1000);
 }
 
