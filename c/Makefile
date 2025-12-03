@@ -8,7 +8,7 @@ OBJS := $(foreach d,$(DAYS),day$(d)/day$(d).o)
 
 all: aoc
 
-aoc: aoc.o $(OBJS)
+aoc: aoc.o $(OBJS) util.o
 	$(CC) $(CFLAGS) -o $@ $^
 
 %.o: %.c

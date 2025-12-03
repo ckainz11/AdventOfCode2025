@@ -1,4 +1,5 @@
 #include "day2.h"
+#include "../util.h"
 
 #include <string.h>
 
@@ -6,17 +7,6 @@ short count_digits(unsigned long num) {
     if (num < 10)
         return 1;
     return 1 + count_digits(num / 10);
-}
-
-unsigned long ten_pow(int exp) {
-    if (exp < 0) {
-        printf("ten_pow needs positive exp\n");
-        exit(EXIT_FAILURE);
-    }
-
-    if (exp == 0)
-        return 1;
-    return 10 * ten_pow(exp - 1);
 }
 
 int repeats_n_times(unsigned long num, short n) {

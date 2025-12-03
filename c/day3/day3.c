@@ -1,17 +1,7 @@
 #include "day3.h"
+#include "../util.h"
 
 #include <string.h>
-
-unsigned long pow(int exp) {
-	if (exp < 0) {
-		printf("error: ten_pow requires positive exp\n");
-		return 1;
-	}
-
-	if (exp == 0)
-		return 1;
-	return 10 * pow(exp - 1);
-}
 
 int find_max(char *line, int start, int space) {
 	int max = 0;
@@ -27,10 +17,6 @@ int find_max(char *line, int start, int space) {
 	return index;
 }
 
-int char_to_int(char c) {
-	return c - '0';
-}
-
 void solve_day3(FILE *input, int num_length) {
 	char *line = NULL;
 	size_t size = 0;
@@ -43,8 +29,8 @@ void solve_day3(FILE *input, int num_length) {
 		for (int i = 0; i < num_length; i++) {
 			int room = num_length - i - 1;
 			int idx = find_max(line, last_index, room);
-			int digit = char_to_int(line[idx]);
-			num += digit * pow(room);	
+			int digit = digit_to_int(line[idx]);
+			num += digit * ten_pow(room);
 			last_index = idx;
 		}
 		sum += num;
