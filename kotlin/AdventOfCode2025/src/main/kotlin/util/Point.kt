@@ -38,6 +38,7 @@ data class Point(var x: Int, var y: Int) {
 	}
 
 	fun cardinalNeighbors() = cardinals.map { this + it }
+    fun adjacentNeighbors() = directions.map { this + it}
 
 	companion object {
 
