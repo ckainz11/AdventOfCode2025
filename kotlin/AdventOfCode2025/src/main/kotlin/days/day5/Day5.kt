@@ -16,8 +16,8 @@ class Day5(override val input: String) : Day<Long>(input) {
     private val freshIngredientRanges = parsed.first
     private val availableIngredients = parsed.second
 
-    override fun solve1(): Long =
-        availableIngredients.count { id -> freshIngredientRanges.any { range -> range.contains(id) } }.toLong()
+    override fun solve1(): Long = availableIngredients
+        .count { id -> freshIngredientRanges.any { range -> id in range } }.toLong()
 
     override fun solve2(): Long = freshIngredientRanges
         .fold(mutableSetOf<LongRange>()) { seen, range -> range.mergeInto(seen) }
