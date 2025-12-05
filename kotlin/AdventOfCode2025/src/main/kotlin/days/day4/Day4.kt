@@ -5,6 +5,7 @@ import days.day4.Day4.Constants.PAPER
 import setup.Day
 import util.Matrix
 import util.Point
+import util.asMatrix
 import util.getOrElse
 import util.mapMatrixIndexedNotNull
 
@@ -15,7 +16,7 @@ class Day4(override val input: String) : Day<Int>(input) {
         const val THRESHHOLD = 4
     }
 
-    private val grid = input.lines().map { it.toList() }
+    private val grid = input.asMatrix()
     private val removed = mutableSetOf<Point>()
 
     override fun solve1(): Int = grid.getRemovablePaper().size
