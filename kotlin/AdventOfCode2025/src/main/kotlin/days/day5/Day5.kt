@@ -5,16 +5,16 @@ import util.adjoint
 import util.allLongs
 import util.merge
 import util.overlaps
+import util.sections
 
 class Day5(override val input: String) : Day<Long>(input) {
 
-    private val parsed = input.split("\n\n").let { (fresh, available) ->
-        fresh.lines().map { range -> range.split("-").let { (start, end) -> start.toLong()..end.toLong() } } to
-                available.allLongs()
-    }
-
-    private val freshIngredientRanges = parsed.first
-    private val availableIngredients = parsed.second
+    private val freshIngredientRanges = input.sections()
+        .first()
+        .lines().map { range -> range.split("-").let { (start, end) -> start.toLong()..end.toLong() } }
+    private val availableIngredients = input.sections()
+        .last()
+        .allLongs()
 
     override fun solve1(): Long = availableIngredients
         .count { id -> freshIngredientRanges.any { range -> id in range } }.toLong()
