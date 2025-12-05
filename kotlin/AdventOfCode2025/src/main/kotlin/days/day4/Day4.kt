@@ -1,7 +1,5 @@
 package days.day4
 
-import days.day4.Day4.Constants.THRESHHOLD
-import days.day4.Day4.Constants.PAPER
 import setup.Day
 import util.Matrix
 import util.Point
@@ -9,12 +7,10 @@ import util.asMatrix
 import util.getOrElse
 import util.mapMatrixIndexedNotNull
 
-class Day4(override val input: String) : Day<Int>(input) {
+const val PAPER = '@'
+const val THRESHHOLD = 4
 
-    object Constants {
-        const val PAPER = '@'
-        const val THRESHHOLD = 4
-    }
+class Day4(override val input: String) : Day<Int>(input) {
 
     private val grid = input.asMatrix()
     private val removed = mutableSetOf<Point>()
