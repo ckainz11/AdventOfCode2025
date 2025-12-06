@@ -37,6 +37,11 @@ fun <T> Matrix<T>.getOrElse(p: Point, default: T): T {
 /*----- Columns and Rows -----*/
 
 fun <T> Matrix<T>.getColumn(col: Int): List<T> = this.map { it[col] }
+
+/**
+ * Returns a list of all columns in the matrix.
+ * Matrix is expected to be square.
+ */
 fun <T> Matrix<T>.columns() = this[0].indices.map { this.getColumn(it) }
 fun <T> Matrix<T>.xRange() = this[0].indices
 fun <T> Matrix<T>.yRange() = this.indices
