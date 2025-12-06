@@ -9,7 +9,9 @@ import util.split
 
 class Day6(override val input: String) : Day<Long>(input) {
 
-    private val operations = input.lines().last().filter { !it.isWhitespace() }.map { it.toOperation() }
+    private val operations = input.lines().last()
+        .filter { !it.isWhitespace() }
+        .map { it.toOperation() }
 
     override fun solve1(): Long = input.lines().dropLast(1)
         .map { line -> line.allLongs() }
