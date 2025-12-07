@@ -6,6 +6,7 @@ import days.day3.Day3
 import days.day4.Day4
 import days.day5.Day5
 import days.day6.Day6
+import days.day7.Day7
 
 
 object Days {
@@ -16,6 +17,7 @@ object Days {
         3 to ::Day3,
         4 to ::Day4,
         5 to ::Day5,
-        6 to ::Day6
+        6 to ::Day6,
+        7 to ::Day7
 	)
 }
