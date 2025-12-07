@@ -37,8 +37,20 @@ data class Point(var x: Int, var y: Int) {
 		}
 	}
 
+    /**
+     * Returns the cardinal neighbors of this point.
+     */
 	fun cardinalNeighbors() = cardinals.map { this + it }
-    fun adjacentNeighbors() = directions.map { this + it}
+
+    /**
+     * Returns the diagonal neighbors of this point.
+     */
+    fun diagonalNeighbors() = diagonals.map { this + it }
+
+    /**
+     * Returns all neighbors (cardinal and diagonal) of this point.
+     */
+    fun allNeighbors() = directions.map { this + it}
 
 	companion object {
 

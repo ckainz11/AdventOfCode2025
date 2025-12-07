@@ -24,7 +24,7 @@ class Day4(override val input: String) : Day<Int>(input) {
     private fun Matrix<Char>.getRemovablePaper() = this
         .mapMatrixIndexedNotNull { p, c -> if (c == PAPER && p.removable()) p else null }
 
-    private fun Point.removable() = !removed.contains(this) && this.adjacentNeighbors()
+    private fun Point.removable() = !removed.contains(this) && this.allNeighbors()
         .filter { !removed.contains(it) }
         .count { grid.getOrElse(it, '.') == PAPER } < THRESHHOLD
 }
