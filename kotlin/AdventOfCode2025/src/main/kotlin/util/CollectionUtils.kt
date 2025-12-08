@@ -43,6 +43,26 @@ fun <T> List<T>.split(predicate: (T) -> Boolean): List<List<T>> {
     return result
 }
 
+/*----- subsets -----*/
+fun <T> List<T>.subsetsOfSize(size: Int): List<List<T>> {
+    if (size < 0) error("Size must be non-negative")
+    if (size > this.size) return emptyList()
+    if (size == 0) return listOf(emptyList())
+
+    if (size == 1) return this.map { listOf(it) }
+
+    val result = mutableListOf<List<T>>()
+    for (i in this.indices) {
+        val element = this[i]
+        val remaining = this.drop(i + 1)
+        val subsets = remaining.subsetsOfSize(size - 1)
+        for (subset in subsets) {
+            result.add(listOf(element) + subset)
+        }
+    }
+    return result
+}
+
 /*----- String Joining -----*/
 
 fun <T> Array<T>.join() = this.joinToString("")
