@@ -1,18 +1,22 @@
 package days.day10
 
+import com.microsoft.z3.Context
+import com.microsoft.z3.IntExpr
+import com.microsoft.z3.IntNum
+import com.microsoft.z3.Status
 import setup.Day
 import util.ImplicitGraph
 import util.ImplicitNode
 import util.allInts
 
-val lightsRegex = """\[([.#])+\]""".toRegex()
+val indicatorRegex = """\[([.#])+]""".toRegex()
 val buttonRegex = """\([\d,]+\)""".toRegex()
-val joltageRegex = """\{.*\}""".toRegex()
+val joltageRegex = """\{.*}""".toRegex()
 
 class Day10(override val input: String) : Day<Int>(input) {
 
     override fun solve1(): Int = input.lines().sumOf { line ->
-		val indicator = lightsRegex.find(line)!!.value
+		val indicator = indicatorRegex.find(line)!!.value
 			.drop(1)
 			.dropLast(1)
 
@@ -30,9 +34,44 @@ class Day10(override val input: String) : Day<Int>(input) {
 		graph.shortestPathTo(target)
 	}
 
-    override fun solve2(): Int {
-        TODO("Not yet implemented")
-    }
+    override fun solve2(): Int = input.lines().sumOf { line ->
+		val buttonWiring = buttonRegex.findAll(line)
+			.map { match -> match.value.allInts().toSet() }
+			.toList()
+
+		val targetJoltages = joltageRegex.find(line)!!.value.allInts()
+
+		solveJoltages(buttonWiring, targetJoltages)
+	}
+
+	fun solveJoltages(wiring: List<Set<Int>>, targetJoltages: List<Int>) = Context().use { ctx ->
+		val solver = ctx.mkOptimize()
+		val zero = ctx.mkInt(0)
+
+		val buttons = wiring.indices
+			.map { ctx.mkIntConst("button#$it") }
+			.onEach { button -> solver.Add(ctx.mkGe(button, zero)) }
+			.toTypedArray()
+
+		targetJoltages.forEachIndexed { counter, targetValue ->
+			val buttonsThatIncrement = wiring
+				.withIndex()
+				.filter { (_, counters) -> counter in counters }
+				.map { buttons[it.index] }
+				.toTypedArray()
+
+			val target = ctx.mkInt(targetValue)
+			val sumOfPresses = ctx.mkAdd(*buttonsThatIncrement) as IntExpr
+			solver.Add(ctx.mkEq(sumOfPresses, target))
+		}
+
+		val presses = ctx.mkIntConst("presses")
+		solver.Add(ctx.mkEq(presses, ctx.mkAdd(*buttons)))
+		solver.MkMinimize(presses)
+
+		if (solver.Check() != Status.SATISFIABLE) error("No solution found")
+		solver.model.evaluate(presses, false).let { it as IntNum }.int
+	}
 
 	/**
 	 * A machine that can toggle indicators based on button presses.
@@ -48,6 +87,5 @@ class Day10(override val input: String) : Day<Int>(input) {
 			val nextState = buttons.fold(key) { acc, bit -> acc xor bit}
 			return IndicatorMachine(1, nextState, wiring)
 		}
-
 	}
 }
